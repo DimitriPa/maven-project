@@ -1,9 +1,17 @@
 pipeline {
   agent any
+  
+  parameters {
+       string(name: 'docker_prod', defaultValue: '18.224.179.174', description: 'Production Server')
+  }  
+  
   stages {
     stage('Build'){
       steps{
         sh 'mvn clean package'
+        sh "scp -i /var/lib/jenkins/docker-demo.pem -oStrictHostKeyChecking=no **/Dockerfile ec2-user@${params.docker_prod}"
+        sh "scp -i /var/lib/jenkins/docker-demo.pem -oStrictHostKeyChecking=no **/target/*.war ec2-user@${params.docker_prod}"
+//        sh "ssh -i /var/lib/jenkins/docker-demo.pem -oStrictHostKeyChecking=no ec2-user@${params.docker_prod} -C docker build . -t tomcatwebapp:${env.BUILD_ID}"
       }
     }
   }
