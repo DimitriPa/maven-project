@@ -9,7 +9,7 @@ pipeline {
     stage('Build'){
       steps{
         sh 'mvn clean package'
-        sh "scp -i /var/lib/jenkins/docker-demo.pem -oStrictHostKeyChecking=no **/../Dockerfile ec2-user@${params.docker_prod}:/home/ec2-use"
+        sh "scp -i /var/lib/jenkins/docker-demo.pem -oStrictHostKeyChecking=no **/../Dockerfile ec2-user@${params.docker_prod}:/home/ec2-user"
         sh "scp -i /var/lib/jenkins/docker-demo.pem -oStrictHostKeyChecking=no **/target/*.war ec2-user@${params.docker_prod}:/home/ec2-user"
 //        sh "ssh -i /var/lib/jenkins/docker-demo.pem -oStrictHostKeyChecking=no ec2-user@${params.docker_prod} -C docker build . -t tomcatwebapp:${env.BUILD_ID}"
       }
