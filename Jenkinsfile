@@ -14,15 +14,5 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy to Staging') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
     }
 }
